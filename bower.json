@@ -1,0 +1,30 @@
+{
+  "name": "KanColle-Scoutingsearch",
+  "version": "0.1.0",
+  "homepage": "https://github.com/philopon/KanColle-Scoutingsearch",
+  "description": "kanncolle scoutingsearch",
+  "keywords": [
+    "purescript"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "node_modules",
+    "output",
+    "tests",
+    "tmp",
+    "bower.json",
+    "Gruntfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "purescript-jquery":  "*",
+    "purescript-math":  "*",
+    "purescript-arrays":  "*",
+    "purescript-foreign":  "*",
+    "purescript-either":  "*",
+    "purescript-tuples": "*",
+    "purescript-foldable-traversable": "*"
+  }
+}
