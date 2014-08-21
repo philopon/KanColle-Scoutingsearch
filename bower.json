@@ -21,6 +21,7 @@
   "dependencies": {
     "purescript-jquery":  "*",
     "purescript-math":  "*",
+    "purescript-refs":  "*",
     "purescript-arrays":  "*",
     "purescript-foreign":  "*",
     "purescript-either":  "*",

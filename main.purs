@@ -2,7 +2,7 @@ module Main where
 
 import Control.Monad
 import Control.Monad.Eff
-import Control.Monad.ST
+import Control.Monad.Eff.Ref
 import qualified Control.Monad.JQuery as J
 
 import Math
@@ -14,23 +14,23 @@ import Data.Foldable
 import Data.Foreign
 import Data.Either
 
-data Status h = Status
-    { raders :: STRef h [STRef h Number]
-    , planes :: STRef h [STRef h Number]
-    , fleet  :: [Tuple Number (STRef h Number)]
+data Status = Status
+    { raders :: RefVal [RefVal Number]
+    , planes :: RefVal [RefVal Number]
+    , fleet  :: [Tuple Number (RefVal Number)]
     }
 
 initStatus = do
-    r <- newSTRef []
-    p <- newSTRef []
-    f <- for (range 0 5) (\i -> Tuple i <$> newSTRef 0)
+    r <- newRef []
+    p <- newRef []
+    f <- for (range 0 5) (\i -> Tuple i <$> newRef 0)
     return $ Status { raders: r, planes: p, fleet: f }
 
-sumStatus :: forall h eff. Status h -> Eff (st :: ST h | eff) Number
+sumStatus :: forall eff. Status -> Eff (ref :: Ref | eff) Number
 sumStatus (Status st) = do
-    rs <- readSTRef st.raders >>= flip for readSTRef
-    ps <- readSTRef st.planes >>= flip for readSTRef 
-    fs <- for st.fleet (\i -> readSTRef $ snd i)
+    rs <- readRef st.raders >>= flip for readRef
+    ps <- readRef st.planes >>= flip for readRef 
+    fs <- for st.fleet (\i -> readRef $ snd i)
     let fv = sum fs - sum rs - sum ps
     return $ sum rs + 2 * sum ps + floor (sqrt fv)
 
@@ -55,14 +55,14 @@ equipField name value = do
 newEquip getter result status tbl name value = do
     Tuple inp tr <- equipField name value
 
-    numRef <- newSTRef 0
-    modifySTRef (getter status) (\s -> numRef:s)
+    numRef <- newRef 0
+    modifyRef (getter status) (\s -> numRef:s)
 
     flip (J.on "change") inp $ \_ _ -> do
         v <- J.getValue inp
         case parseForeign read v >>= parseJSON of
             Right v -> do
-                writeSTRef numRef (value * v)
+                writeRef numRef (value * v)
                 r <- sumStatus status
                 show r `J.setText` result
 
@@ -72,7 +72,7 @@ newRader = newEquip (\(Status s) -> s.raders)
 newPlane = newEquip (\(Status s) -> s.planes)
 
 initFleet result tbl status@(Status h) = for_ h.fleet $ \(Tuple i ref) -> do
-    init <- readSTRef ref
+    init <- readRef ref
 
     tr         <- J.create "<tr>"
     indexCell  <- J.create "<td>"
@@ -92,7 +92,7 @@ initFleet result tbl status@(Status h) = for_ h.fleet $ \(Tuple i ref) -> do
         v <- J.getValue input
         case parseForeign read v >>= parseJSON of
             Right v -> do
-                writeSTRef ref v
+                writeRef ref v
                 r <- sumStatus status
                 show r `J.setText` result
 
@@ -124,12 +124,3 @@ main = J.ready $ do
     newPlane result st planes "瑞雲12型(六三四空)" 7
     newPlane result st planes "彩雲" 9
     newPlane result st planes "二式艦上偵察機" 7
-
-
-
---    e1 <- newRader raders result "13号対空電探" 3
---    e2 <- equipField raders result "22号対水上電探" 5
---
---    sumStatus raders
---    e1 `J.append` rader
---    e2 `J.append` rader
