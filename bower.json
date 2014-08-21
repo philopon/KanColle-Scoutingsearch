@@ -22,10 +22,8 @@
     "purescript-jquery":  "*",
     "purescript-math":  "*",
     "purescript-refs":  "*",
-    "purescript-arrays":  "*",
     "purescript-foreign":  "*",
     "purescript-either":  "*",
-    "purescript-tuples": "*",
     "purescript-foldable-traversable": "*"
   }
 }

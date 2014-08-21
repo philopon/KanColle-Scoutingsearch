@@ -7,39 +7,28 @@
     <script src="main.js"></script>
   </head>
   <body class="container">
-    <h1>艦これ 索敵値計算機</h1>
-    <div class="row">
-      <div class="col-sm-5 col-md-5">
-        <table id ="rader" class="table">
-          <tr>
-            <th>個数</th>
-            <th>電探</th>
-            <th>索敵値</th>
-          </tr>
-        </table>
-      </div>
 
-      <div class="col-sm-5 col-md-5">
-        <table id="plane" class="table">
-          <tr>
-            <th>個数</th>
-            <th>偵察機</th>
-            <th>索敵値</th>
-          </tr>
-        </table>
-      </div>
+    <div class="clearfix">
+      <h1 class="pull-left">艦これ 索敵値計算機</h1>
+      <h3 class="pull-right">合計索敵値: <span id="result">-</span></h3>
+    </div>
 
-      <div class="col-sm-2 col-md-2">
+      <div>
         <table id="fleet" class="table">
+          <caption>艦隊索敵値</caption>
           <tr>
-            <th>艦隊索敵値</th>
-            <th>索敵値</th>
+            <th>旗艦</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+            <th style="width: 5em">合計</th>
           </tr>
         </table>
       </div>
-    </div>
-    </div class="row">
-    <h3>合計索敵値: <span id="result">-</span></h3>
-    </div>
+
+      <div id="items"></div>
+
   </body>
 </html>
