@@ -986,7 +986,7 @@ PS.Main = (function () {
                                                     return Debug_Trace.print(Data_Foreign.showForeignError({}))(_373.value0);
                                                 };
                                                 throw new Error("Failed pattern match");
-                                            })(Prelude[">>="](Data_Either.bindEither({}))(Data_Foreign_Class.readWith(Data_Foreign_Class.stringIsForeign({}))(Prelude.id(Prelude.categoryArr({})))(_11))(Data_Foreign_Class.readJSON(Data_Foreign_Class.numberIsForeign({}))))();
+                                            })(Prelude[">>="](Data_Either.bindEither({}))(Data_Foreign_Class.read(Data_Foreign_Class.stringIsForeign({}))(_11))(Data_Foreign_Class.readJSON(Data_Foreign_Class.numberIsForeign({}))))();
                                         };
                                     };
                                 });

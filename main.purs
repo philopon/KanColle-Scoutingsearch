@@ -55,7 +55,7 @@ initFleet refs sumRef callback = do
     for_ inps $ \inp -> do
         flip (J.on "change") inp.input $ \_ _ -> do
             v <- J.getValue inp.input
-            case readWith id v >>= readJSON of
+            case read v >>= readJSON of
                 Right v -> do
                     writeRef inp.ref v
                     reflesh false
